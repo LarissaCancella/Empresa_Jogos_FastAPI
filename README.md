@@ -43,21 +43,23 @@ Inicie a aplicação (na porta que preferir, ex: 8000)
 uvicorn main:app --port 8000
 ```
 
-## Modelo de dados
+# Modelo de dados
 
-# Empresa
+## Empresa
 
-| id               | int   | pk  |
+| Campo            | Tipo  |     |
 | ---------------- | ----- | --- |
+| id               | int   | pk  |
 | nome             | str   |     |
 | num_funcionarios | float |     |
 | endereco         | str   |     |
 | cnpj             | str   |     |
 
-# Jogo
+## Jogo
 
-| id              | int      | pk  |
+| Campo           | Tipo     |     |
 | --------------- | -------- | --- |
+| id              | int      | pk  |
 | nome            | str      |     |
 | num_vendas      | float    |     |
 | data_lancamento | datetime |     |
