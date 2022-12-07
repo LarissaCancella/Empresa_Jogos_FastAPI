@@ -15,7 +15,7 @@ from schemas import (
 from services import EmpresaService, JogoService
 
 empresa_router = APIRouter(prefix='/empresa')
-jogo_router = APIRouter(prefix='/games')
+jogo_router = APIRouter(prefix='/jogos')
 
 @empresa_router.post('/create', response_model=StandardOutput, responses={400: {'model': ErrorOutput}})
 async def empresa_create(empresa_input: EmpresaCreateInput):
@@ -55,41 +55,41 @@ async def empresa_list_by_id(empresa_id: int):
     except Exception as error:
         raise HTTPException(400, detail=str(error))
 
-@jogo_router.post('/game/add', response_model=StandardOutput, responses={400: {'model': ErrorOutput}})
-async def game_add(game_add: EmpresaJogosAddInput):
+@jogo_router.post('/add', response_model=StandardOutput, responses={400: {'model': ErrorOutput}})
+async def jogo_add(jogo_add: EmpresaJogosAddInput):
     try:
-        await JogoService.add_game(empresa_id=game_add.empresa_id, nome=game_add.nome, data_lancamento=game_add.data_lancamento, num_vendas=game_add.num_vendas, plataforma=game_add.plataforma)
+        await JogoService.add_jogo(empresa_id=jogo_add.empresa_id, nome=jogo_add.nome, data_lancamento=jogo_add.data_lancamento, num_vendas=jogo_add.num_vendas, plataforma=jogo_add.plataforma)
         return StandardOutput(message='Jogo cadastrado com sucesso!') 
     except Exception as error:
         raise HTTPException(400, detail=str(error))
 
-@jogo_router.delete('/game/remove/{game_id}', response_model=StandardOutput, responses={400: {'model': ErrorOutput}})
-async def game_remove(game_id: int):
+@jogo_router.delete('/remove/{jogo_id}', response_model=StandardOutput, responses={400: {'model': ErrorOutput}})
+async def jogo_remove(jogo_id: int):
     try:
-        await JogoService.remove_game(game_id=game_id) 
+        await JogoService.remove_jogo(jogo_id=jogo_id) 
         return StandardOutput(message='Jogo removido com sucesso!') 
     except Exception as error:
         raise HTTPException(400, detail=str(error))
 
-@jogo_router.put('/update/{game_id}', response_model=StandardOutput, responses={400: {'model': ErrorOutput}})
-async def game_update(game_id: int, game_input: EmpresaJogosAddInput):
+@jogo_router.put('/update/{jogo_id}', response_model=StandardOutput, responses={400: {'model': ErrorOutput}})
+async def jogo_update(jogo_id: int, jogo_input: EmpresaJogosAddInput):
     try:
-        await JogoService.update_game(game_id=game_id, empresa_id=game_input.empresa_id, nome=game_input.nome, data_lancamento=game_input.data_lancamento, num_vendas=game_input.num_vendas, plataforma=game_input.plataforma)
+        await JogoService.update_jogo(jogo_id=jogo_id, empresa_id=jogo_input.empresa_id, nome=jogo_input.nome, data_lancamento=jogo_input.data_lancamento, num_vendas=jogo_input.num_vendas, plataforma=jogo_input.plataforma)
         return StandardOutput(message='Jogo atualizado com sucesso!') 
     except Exception as error:
         raise HTTPException(400, detail=str(error))
 
 @jogo_router.get('/list', response_model=List[JogoListOutput], responses={400: {'model': ErrorOutput}})
-async def games_list():
+async def jogos_list():
     try:
-        return await JogoService.list_games()
+        return await JogoService.list_jogos()
     except Exception as error:
         raise HTTPException(400, detail=str(error))
 
-@jogo_router.get('/list/{game_id}', response_model=JogoListOutput, responses={400: {'model': ErrorOutput}})
-async def games_list_by_id(game_id: int):
+@jogo_router.get('/list/{jogo_id}', response_model=JogoListOutput, responses={400: {'model': ErrorOutput}})
+async def jogos_list_by_id(jogo_id: int):
     try:
-        return await JogoService.get_by_id(game_id=game_id)
+        return await JogoService.get_by_id(jogo_id=jogo_id)
     except Exception as error:
         raise HTTPException(400, detail=str(error))
 

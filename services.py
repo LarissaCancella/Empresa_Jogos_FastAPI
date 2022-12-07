@@ -33,29 +33,29 @@ class EmpresaService:
             return result.scalar()
 
 class JogoService:
-    async def add_game(empresa_id: int, nome: str, data_lancamento: datetime.datetime, num_vendas: float, plataforma: str):
+    async def add_jogo(empresa_id: int, nome: str, data_lancamento: datetime.datetime, num_vendas: float, plataforma: str):
         async with async_session() as session:
             session.add(Jogo(empresa_id=empresa_id, nome=nome, data_lancamento=data_lancamento, num_vendas=num_vendas, plataforma=plataforma))
             await session.commit()
 
-    async def update_game(game_id: int, empresa_id: int, nome: str, data_lancamento: datetime.datetime, num_vendas: float, plataforma: str):
+    async def update_jogo(jogo_id: int, empresa_id: int, nome: str, data_lancamento: datetime.datetime, num_vendas: float, plataforma: str):
         async with async_session() as session:
-            await session.execute(update(Jogo).where(Jogo.id==game_id).values(empresa_id=empresa_id, nome=nome, data_lancamento=data_lancamento, num_vendas=num_vendas, plataforma=plataforma))
+            await session.execute(update(Jogo).where(Jogo.id==jogo_id).values(empresa_id=empresa_id, nome=nome, data_lancamento=data_lancamento, num_vendas=num_vendas, plataforma=plataforma))
             await session.commit()
 
-    async def remove_game(game_id: int):
+    async def remove_jogo(jogo_id: int):
         async with async_session() as session:
-            await session.execute(delete(Jogo).where(Jogo.id==game_id))
+            await session.execute(delete(Jogo).where(Jogo.id==jogo_id))
             await session.commit()
 
-    async def list_games():
+    async def list_jogos():
         async with async_session() as session:
             result = await session.execute(select(Jogo))
             return result.scalars().all()
     
-    async def get_by_id(game_id):
+    async def get_by_id(jogo_id):
         async with async_session() as session:
-            result = await session.execute(select(Jogo).where(Jogo.id==game_id))
+            result = await session.execute(select(Jogo).where(Jogo.id==jogo_id))
             return result.scalar()
 
     
